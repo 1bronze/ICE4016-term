@@ -15,7 +15,9 @@ router.use(expressSession({
 router.get('/reservation', (req, res) => {
     const userCookie = JSON.parse(req.cookies.user || '{}');
     if (userCookie.authority && userCookie.authority === "patient") {
-        res.render('patient/reservation-management');
+        res.render('patient/reservation-management', {
+            username: userCookie.id,
+        });
     } else {
         res.redirect('/');
     }

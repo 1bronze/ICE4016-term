@@ -15,7 +15,9 @@ router.use(expressSession({
 router.get('/doctor', (req, res) => {
     const userCookie = JSON.parse(req.cookies.user || '{}');
     if (userCookie.authority && userCookie.authority === "admin") {
-        res.render('admin/doctor-management');
+        res.render('admin/doctor-management', {
+            username: userCookie.id,
+        });
     } else {
         res.redirect('/');
     }
@@ -24,7 +26,9 @@ router.get('/doctor', (req, res) => {
 router.get('/nurse', (req, res) => {
     const userCookie = JSON.parse(req.cookies.user || '{}');
     if (userCookie.authority && userCookie.authority === "admin") {
-        res.render('admin/nurse-management');
+        res.render('admin/nurse-management', {
+            username: userCookie.id,
+        });
     } else {
         res.redirect('/');
     }

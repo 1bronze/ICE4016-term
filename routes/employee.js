@@ -15,7 +15,9 @@ router.use(expressSession({
 router.get('/examination', (req, res) => {
     const userCookie = JSON.parse(req.cookies.user || '{}');
     if (userCookie.authority && userCookie.authority === "doctor") {
-        res.render('employee/examination-management');
+        res.render('employee/examination-management', {
+            username: userCookie.id,
+        });
     } else {
         res.send("<script>alert('Only doctors can access here!'); window.location.replace('/');</script>");
     }
@@ -24,7 +26,9 @@ router.get('/examination', (req, res) => {
 router.get('/treatment', (req, res) => {
     const userCookie = JSON.parse(req.cookies.user || '{}');
     if (userCookie.authority && userCookie.authority === "nurse") {
-        res.render('employee/examination-management');
+        res.render('employee/examination-management', {
+            username: userCookie.id,
+        });
     } else {
         res.send("<script>alert('Only nurses can access here!'); window.location.replace('/');</script>");
     }
@@ -33,7 +37,9 @@ router.get('/treatment', (req, res) => {
 router.get('/patients', (req, res) => {
     const userCookie = JSON.parse(req.cookies.user || '{}');
     if (userCookie.authority && (userCookie.authority === "doctor" || userCookie.authority === "nurse")) {
-        res.render('employee/patients-management');
+        res.render('employee/patients-management', {
+            username: userCookie.id,
+        });
     } else {
         res.redirect('/');
     }

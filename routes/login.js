@@ -16,9 +16,13 @@ router.get('/', (req, res) => {
     const userCookie = JSON.parse(req.cookies.user || '{}');
     if (userCookie.authority) {
         if (userCookie.authority === "doctor" || userCookie.authority === "nurse") {
-            res.render('employee/index');
+            res.render('employee/index', {
+                username: userCookie.id,
+            });
         } else {
-            res.render(`${userCookie.authority}/index`);
+            res.render(`${userCookie.authority}/index`, {
+                username: userCookie.id,
+            });
         }
     } else {
         res.render('login');
@@ -40,7 +44,7 @@ router.post('/', async (req, res) => {
     const doctors = await selectSql.getDoctors();
     const nurses = await selectSql.getNurses();
     const patients = await selectSql.getPatients();
-    var whoAmI = 1;
+    var whoAmI = "";
     let authority = "";
     let checkLogin = false;
 
