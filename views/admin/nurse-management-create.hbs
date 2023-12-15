@@ -8,7 +8,7 @@
         <meta name="author" content="" />
         <title>Dashboard - Inha Hospital</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-        <link href="../styles.css" rel="stylesheet" />
+        <link href="../../styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -63,22 +63,42 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4 mb-4">Doctor Management</h1>
+                        <h1 class="mt-4 mb-4">Nurse Management</h1>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Doctor List
-                                <button type="button" onclick="location.href='/admin/doctor/create'" 
-                        style="background-color: #007bff; /* Blue */
-                               border: none;
-                               color: white;
-                               padding: 5px 10px;
-                               text-align: center;
-                               text-decoration: none;
-                               display: inline-block;
-                               font-size: 14px;
-                               margin-left: 10px;
-                               cursor: pointer; float: right;">Create</button>
+                                Nurse List
+                            </div>
+                            <div class="card-body">
+                                <form action="/admin/nurse/create" method="POST" style="font-family: Arial, sans-serif; margin: 20px;">
+                                    <h2 style="color: #333;">Create New Nurse</h2>
+                                    <div class="form-group" style="margin-bottom: 15px;">
+                                        <label for="nurse_id" style="display: block; margin-bottom: 5px;">id:</label>
+                                        <input type="text" id="nurse_id" name="nurse_id" value="{{nurseData.nurse_id}}" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 15px;">
+                                        <label for="name" style="display: block; margin-bottom: 5px;">Name:</label>
+                                        <input type="text" id="name" name="name" value="{{nurseData.name}}" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 15px;">
+                                        <label for="address" style="display: block; margin-bottom: 5px;">Address:</label>
+                                        <input type="text" id="address" name="address" value="{{nurseData.address}}" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 15px;">
+                                        <label for="phone_number" style="display: block; margin-bottom: 5px;">Phone Number:</label>
+                                        <input type="tel" id="phone_number" name="phone_number" value="{{nurseData.phone_number}}" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 15px;">
+                                        <label for="password" style="display: block; margin-bottom: 5px;">Password:</label>
+                                        <input type="password" id="password" name="password" value="{{nurseData.password}}" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 15px;">
+                                        <label for="department_id" style="display: block; margin-bottom: 5px;">Department ID:</label>
+                                        <input type="text" id="department_id" name="department_id" value="{{nurseData.department_id}}" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                    </div>
+
+                                    <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px;">Create</button>
+                                </form>
                             </div>
                             <div class="card-body">
                                 <table border="1" style="width: 100%; border-collapse: collapse;">
@@ -89,14 +109,14 @@
                                         <th style="padding: 8px; text-align: left;">Department ID</th>
                                         <th style="padding: 8px; text-align: center;">Actions</th>
                                     </tr>
-                                    {{#each doctors}}
+                                    {{#each nurses}}
                                     <tr style="background-color: #ffffff;">
                                         <td style="padding: 8px; text-align: left;">{{this.name}}</td>
                                         <td style="padding: 8px; text-align: left;">{{this.address}}</td>
                                         <td style="padding: 8px; text-align: left;">{{this.phone_number}}</td>
                                         <td style="padding: 8px; text-align: left;">{{this.department_id}}</td>
                                         <td style="padding: 8px; text-align: center;">
-                                            <button type="button" onclick="location.href='/admin/doctor/update?id={{this.doctor_id}}'" 
+                                            <button type="button" onclick="location.href='/admin/nurse/update?id={{this.nurse_id}}'" 
                                                     style="background-color: #4CAF50; /* Green */
                                                         border: none;
                                                         color: white;
@@ -107,7 +127,7 @@
                                                         font-size: 16px;
                                                         margin: 4px 2px;
                                                         cursor: pointer;">Edit</button>
-                                            <button type="button" onclick="if(confirm('Are you sure you want to delete this doctor?')) location.href='/admin/doctor/delete?id={{this.doctor_id}}'"
+                                            <button type="button" onclick="if(confirm('Are you sure you want to delete this doctor?')) location.href='/admin/nurse/delete?id={{this.nurse_id}}'"
                                                     style="background-color: #f44336; /* Red */ 
                                                         border: none;
                                                         color: white;
@@ -129,9 +149,9 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="../scripts.js"></script>
+        <script src="../../scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="../datatables-simple-demo.js"></script>
+        <script src="../../datatables-simple-demo.js"></script>
     </body>
 </html>
