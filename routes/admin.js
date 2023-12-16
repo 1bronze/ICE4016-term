@@ -105,7 +105,6 @@ router.post('/doctor/update', async (req, res) => {
     if (userCookie.authority && userCookie.authority === "admin") {
         try {
             await updateSql.updateDoctor(name, address, phone_number, department_id, doctor_id);
-            const doctors = await selectSql.getDoctors();
 
             res.redirect('/admin/doctor');
         } catch (e) {

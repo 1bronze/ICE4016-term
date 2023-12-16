@@ -8,7 +8,7 @@
         <meta name="author" content="" />
         <title>Dashboard - Inha Hospital</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-        <link href="../styles.css" rel="stylesheet" />
+        <link href="../../styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -66,22 +66,32 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4 mb-4">Treatment Management</h1>
+                        <h1 class="mt-4 mb-4">Examination Management</h1>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Treatment List
-                                <button type="button" onclick="location.href='/employee/treatment/create'" 
-                        style="background-color: #007bff; /* Blue */
-                               border: none;
-                               color: white;
-                               padding: 5px 10px;
-                               text-align: center;
-                               text-decoration: none;
-                               display: inline-block;
-                               font-size: 14px;
-                               margin-left: 10px;
-                               cursor: pointer; float: right;">Create</button>
+                                Examination List
+                            </div>
+                            <div class="card-body">
+                                <form action="/employee/examination/update" method="POST" style="font-family: Arial, sans-serif; margin: 20px;">
+                                    <h2 style="color: #333;">Edit Examination</h2>
+                                    <input type="hidden" name="examination_id" value="{{examinationData.examination_id}}">
+                                    <div class="form-group" style="margin-bottom: 15px;">
+                                        <label for="examination_datetime" style="display: block; margin-bottom: 5px;">Datetime:</label>
+                                        <input type="datetime-local" id="examination_datetime" name="examination_datetime" value="{{examinationData.examination_datetime}}" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 15px;">
+                                        <label for="examination_details" style="display: block; margin-bottom: 5px;">Details:</label>
+                                        <input type="text" id="examination_details" name="examination_details" value="{{examinationData.examination_details}}" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                    </div>
+                                    <input type="hidden" name="doctor_id" value="{{examinationData.doctor_id}}">
+                                    <div class="form-group" style="margin-bottom: 15px;">
+                                        <label for="patient_id" style="display: block; margin-bottom: 5px;">Patient ID:</label>
+                                        <input type="text" id="patient_id" name="patient_id" value="{{examinationData.patient_id}}" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                    </div>
+
+                                    <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px;">Edit</button>
+                                </form>
                             </div>
                             <div class="card-body">
                                 <table border="1" style="width: 100%; border-collapse: collapse;">
@@ -91,13 +101,13 @@
                                         <th style="padding: 8px; text-align: left;">Patient ID</th>
                                         <th style="padding: 8px; text-align: center;">Actions</th>
                                     </tr>
-                                    {{#each treatments}}
+                                    {{#each examinations}}
                                     <tr style="background-color: #ffffff;">
-                                        <td style="padding: 8px; text-align: left;">{{this.treatment_datetime}}</td>
-                                        <td style="padding: 8px; text-align: left;">{{this.treatment_details}}</td>
+                                        <td style="padding: 8px; text-align: left;">{{this.examination_datetime}}</td>
+                                        <td style="padding: 8px; text-align: left;">{{this.examination_details}}</td>
                                         <td style="padding: 8px; text-align: left;">{{this.patient_id}}</td>
                                         <td style="padding: 8px; text-align: center;">
-                                            <button type="button" onclick="location.href='/employee/treatment/update?id={{this.treatment_id}}'" 
+                                            <button type="button" onclick="location.href='/employee/examination/update?id={{this.examination_id}}'" 
                                                     style="background-color: #4CAF50; /* Green */
                                                         border: none;
                                                         color: white;
@@ -108,7 +118,7 @@
                                                         font-size: 16px;
                                                         margin: 4px 2px;
                                                         cursor: pointer;">Edit</button>
-                                            <button type="button" onclick="if(confirm('Are you sure you want to delete this treatment?')) location.href='/employee/treatment/delete?id={{this.treatment_id}}'"
+                                            <button type="button" onclick="if(confirm('Are you sure you want to delete this examination?')) location.href='/employee/examination/delete?id={{this.examination_id}}'"
                                                     style="background-color: #f44336; /* Red */ 
                                                         border: none;
                                                         color: white;
@@ -130,9 +140,9 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="scripts.js"></script>
+        <script src="../../scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="../datatables-simple-demo.js"></script>
+        <script src="../../datatables-simple-demo.js"></script>
     </body>
 </html>
