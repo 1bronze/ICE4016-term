@@ -8,7 +8,7 @@
         <meta name="author" content="" />
         <title>Dashboard - Inha Hospital</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-        <link href="../styles.css" rel="stylesheet" />
+        <link href="../../styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -63,17 +63,21 @@
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
                                 Reservation List
-                                <button type="button" onclick="location.href='/patient/reservation/create'" 
-                        style="background-color: #007bff; /* Blue */
-                               border: none;
-                               color: white;
-                               padding: 5px 10px;
-                               text-align: center;
-                               text-decoration: none;
-                               display: inline-block;
-                               font-size: 14px;
-                               margin-left: 10px;
-                               cursor: pointer; float: right;">Create</button>
+                            </div>
+                            <div class="card-body">
+                                <form action="/patient/reservation/create" method="POST" style="font-family: Arial, sans-serif; margin: 20px;">
+                                    <h2 style="color: #333;">Create New Reservation</h2>
+                                    <div class="form-group" style="margin-bottom: 15px;">
+                                        <label for="reservation_datetime" style="display: block; margin-bottom: 5px;">Datetime:</label>
+                                        <input type="datetime-local" id="reservation_datetime" name="reservation_datetime" value="{{reservationData.reservation_datetime}}" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                    </div>
+                                    <input type="hidden" name="patient_id" value="{{patient_id}}">
+                                    <div class="form-group" style="margin-bottom: 15px;">
+                                        <label for="department_id" style="display: block; margin-bottom: 5px;">Department ID:</label>
+                                        <input type="text" id="department_id" name="department_id" value="{{reservationData.department_id}}" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                    </div>
+                                    <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px;">Create</button>
+                                </form>
                             </div>
                             <div class="card-body">
                                 <table border="1" style="width: 100%; border-collapse: collapse;">
@@ -122,9 +126,9 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="../scripts.js"></script>
+        <script src="../../scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="../datatables-simple-demo.js"></script>
+        <script src="../../datatables-simple-demo.js"></script>
     </body>
 </html>

@@ -82,7 +82,18 @@ export const selectSql = {
 
     const [rows] = await promisePool.query(query, values);
     return rows;
-  }
+  },
+
+  getReservations: async (patient_id) => {
+    const query = `select * from reservation WHERE patient_id = ?`;
+    const [rows] = await promisePool.query(query, [patient_id]);
+    return rows;
+  },
+  getReservation: async (reservation_number) => {
+    const query = `select * from reservation WHERE reservation_number = ?`;
+    const [rows] = await promisePool.query(query, [reservation_number]);
+    return rows[0];
+  },
 }
 
 export const createSql = {
@@ -117,6 +128,15 @@ export const createSql = {
         VALUES (?, ?, ?, ?)
     `;
     const values = [treatment_datetime, treatment_details, nurse_id, patient_id];
+    await promisePool.query(query, values);
+  },
+
+  createReservation: async (reservation_datetime, patient_id, department_id) => {
+    const query = `
+        INSERT INTO inha_hospital.reservation (reservation_datetime, patient_id, department_id)
+        VALUES (?, ?, ?)
+    `;
+    const values = [reservation_datetime, patient_id, department_id];
     await promisePool.query(query, values);
   },
 }
@@ -159,6 +179,16 @@ export const updateSql = {
     const values = [treatment_datetime, treatment_details, nurse_id, patient_id, treatment_id];
     await promisePool.query(query, values);
   },
+
+  updateReservation: async (reservation_datetime, patient_id, department_id, reservation_number) => {
+    const query = `
+        UPDATE reservation
+        SET reservation_datetime = ?, patient_id = ?, department_id = ?
+        WHERE reservation_number = ?
+    `;
+    const values = [reservation_datetime, patient_id, department_id, reservation_number];
+    await promisePool.query(query, values);
+  },
 }
 
 export const deleteSql = {
@@ -178,5 +208,10 @@ export const deleteSql = {
   deleteTreatment: async (treatment_id) => {
     const query = `DELETE FROM treatment WHERE treatment_id = ?`;
     await promisePool.query(query, [treatment_id]);
+  },
+
+  deleteReservation: async (reservation_number) => {
+    const query = `DELETE FROM reservation WHERE reservation_number = ?`;
+    await promisePool.query(query, [reservation_number]);
   }
 }
