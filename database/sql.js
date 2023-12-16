@@ -62,6 +62,27 @@ export const selectSql = {
     const [rows] = await promisePool.query(query, [treatment_id]);
     return rows[0];
   },
+  searchPatients: async (searchCriteria) => {
+    let query = `SELECT * FROM patient WHERE `;
+    const conditions = [];
+    const values = [];
+
+    for (const [key, value] of Object.entries(searchCriteria)) {
+        if (value) {
+            conditions.push(`${key} = ?`);
+            values.push(value);
+        }
+    }
+
+    if (conditions.length > 0) {
+        query += conditions.join(' AND ');
+    } else {
+        query = `SELECT * FROM patient`;
+    }
+
+    const [rows] = await promisePool.query(query, values);
+    return rows;
+  }
 }
 
 export const createSql = {

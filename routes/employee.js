@@ -282,15 +282,44 @@ router.get('/treatment/delete', async (req, res) => {
     }
 })
 
-router.get('/patients', (req, res) => {
+router.get('/patients', async (req, res) => {
     const userCookie = JSON.parse(req.cookies.user || '{}');
     if (userCookie.authority && (userCookie.authority === "doctor" || userCookie.authority === "nurse")) {
-        res.render('employee/patients-management', {
-            username: userCookie.id,
-        });
+        try {
+            const patients = await selectSql.getPatients();
+            res.render('employee/patients-management', {
+                username: userCookie.id,
+                patients: patients,
+                patientsData: {}
+            });
+        } catch (e) {
+            res.redirect('/');
+        }
     } else {
         res.redirect('/');
     }
 });
+
+router.post('/patients', async (req, res) => {
+    const userCookie = JSON.parse(req.cookies.user || '{}');
+    if (userCookie.authority && (userCookie.authority === "doctor" || userCookie.authority === "nurse")) {
+        try {
+
+            const { patient_id, name, ssn, gender, address, blood_type, height, weight, phone_number, nurse_id, doctor_id } = req.body;
+            const patients = await  selectSql.searchPatients({ patient_id, name, ssn, gender, address, blood_type, height, weight, phone_number, nurse_id, doctor_id });
+
+            res.render('employee/patients-management', {
+                username: userCookie.id,
+                patients: patients,
+                patientsData: req.body
+            });
+        } catch (error) {
+            res.redirect('/employee/patients');
+        }
+    } else {
+        res.redirect('/');
+    }
+});
+
 
 module.exports = router;
